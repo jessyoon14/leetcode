@@ -13,7 +13,6 @@ vector<int> twoSum(vector<int> &numbers, int target)
     {
         int left_value = numbers[left];
         int right_value = numbers[right];
-
         int sum = left_value + right_value;
 
         if (sum == target)
