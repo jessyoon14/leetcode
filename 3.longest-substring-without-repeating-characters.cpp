@@ -39,7 +39,6 @@ public:
             {
                 // printf("second occurence\n");
                 maxLength = maxLength > currLength ? maxLength : currLength;
-                int old_index = indices[curr];
                 int startWindow = indices[curr];
                 indices[curr] = i;
                 for (int j = 0; j < 128; j++)
