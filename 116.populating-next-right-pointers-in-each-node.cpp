@@ -24,33 +24,51 @@ public:
 */
 
 // DFS
+// class Solution
+// {
+// public:
+//     void connect_row(Node *root)
+//     {
+//         if (!(root->left))
+//             return;
+//         root->left->next = root->right;
+//         connect_row(root->left);
+//         connect_row(root->right);
+//         connect_cousin(root->left, root->right);
+//     }
+
+//     void connect_cousin(Node *left, Node *right)
+//     {
+//         if (!(left->right))
+//             return;
+//         left->right->next = right->left;
+//         connect_cousin(left->right, right->left);
+//     }
+
+//     Node *connect(Node *root)
+//     {
+//         if (!root)
+//             return root;
+//         connect_row(root);
+//         return root;
+//     }
+// };
+
+// Cleaner DFS solution (by KJY)
 class Solution
 {
 public:
-    void connect_row(Node *root)
-    {
-        if (!(root->left))
-            return;
-        root->left->next = root->right;
-        connect_row(root->left);
-        connect_row(root->right);
-        connect_cousin(root->left, root->right);
-    }
-
-    void connect_cousin(Node *left, Node *right)
-    {
-        if (!(left->right))
-            return;
-        left->right->next = right->left;
-        connect_cousin(left->right, right->left);
-    }
-
     Node *connect(Node *root)
     {
-        if (!root)
+        if (!root || !(root->left))
             return root;
-        connect_row(root);
+
+        root->left->next = root->right;
+        root->right->next = root->next ? root->next->left : nullptr;
+        connect(root->left);
+        connect(root->right);
         return root;
     }
 };
+
 // @lc code=end
