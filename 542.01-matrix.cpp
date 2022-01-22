@@ -8,70 +8,72 @@
 class Solution
 {
 public:
-    int getDistance(vector<vector<int>> &mat, int x, int y)
+    void updateDistance(vector<vector<int>> &mat, int x, int y)
     {
-        int NOT_FOUND = 20001;
-        printf("getDistance, y: %i, x: %i\n", y, x);
-
-        if (x < 0 || x >= mat[0].size() || y < 0 || y >= mat.size())
-            return NOT_FOUND; // not found or already called
-
-        if (mat[y][x] == -NOT_FOUND)
-            return -mat[y][x];
-
-        // current slot is zero
-        if (!mat[y][x])
-            return 0;
-
-        int minDistance = mat[y][x] > 0 ? NOT_FOUND : -mat[y][x];
-
-        if (mat[y][x] == 1)
-            mat[y][x] = -NOT_FOUND; // mark this node as already called
-
-        int step[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-
-        int currDistance;
+        int step[4][2] = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}}; // (y, x)
 
         for (int i = 0; i < 4; i++)
         {
-            // printf("in iter 1, minDistance: %i\n", minDistance);
 
-            int currX = x + step[i][0];
-            int currY = y + step[i][1];
-            if (currX < 0 || currX >= mat[0].size() || currY < 0 || currY >= mat.size())
+            int nextX = x + step[i][1];
+            int nextY = y + step[i][0];
+
+            if (nextX < 0 || nextX >= mat[0].size() || nextY < 0 || nextY >= mat.size())
                 continue;
-            // printf("mat value: %i\n", mat[y + step[i][1]][x + step[i][0]]);
-            // printf("before if: y: %i, x: %i \n", y + step[i][1], x + step[i][0]);
-            if (minDistance == mat[y + step[i][1]][x + step[i][0]])
-            {
+
+            int currDistance = getDistance(mat, nextX, nextY);
+            minDistance = minDistance < currDistance ? minDistance : currDistance;
+            if (minDistance == 0)
+                break;
+        }
+    }
+
+    int getDistance(vector<vector<int>> &mat, int x, int y)
+    {
+        if (mat[y][x] == 0)
+            return 0;
+
+        int minDistance = 20001;
+
+        if (mat[y][x] < 0)
+            return -mat[y][x];
+        else
+            mat[y][x] = -minDistance;
+
+        int step[4][2] = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}}; // (y, x)
+
+        for (int i = 0; i < 4; i++)
+        {
+
+            int nextX = x + step[i][1];
+            int nextY = y + step[i][0];
+
+            if (nextX < 0 || nextX >= mat[0].size() || nextY < 0 || nextY >= mat.size())
                 continue;
-            }
 
-            if (minDistance < mat[y + step[i][1]][x + step[i][0]])
-            {
-                // printf("enter if\n");
-                mat[y + step[i][1]][x + step[i][0]] = minDistance + 1;
-            }
-
-            // printf("reach 1\n");
-            currDistance = getDistance(mat, x + step[i][0], y + step[i][1]);
-            minDistance = minDistance > currDistance ? currDistance : minDistance;
+            int currDistance = getDistance(mat, nextX, nextY);
+            minDistance = minDistance < currDistance ? minDistance : currDistance;
+            if (minDistance == 0)
+                break;
         }
 
         for (int i = 0; i < 4; i++)
         {
-            // printf("in iter 2\n");
-            int currX = x + step[i][0];
-            int currY = y + step[i][1];
-            if (currX < 0 || currX >= mat[0].size() || currY < 0 || currY >= mat.size())
+
+            int nextX = x + step[i][1];
+            int nextY = y + step[i][0];
+
+            if (nextX < 0 || nextX >= mat[0].size() || nextY < 0 || nextY >= mat.size())
                 continue;
-            if (-mat[currY][currX] > minDistance)
-                getDistance(mat, x + step[i][0], y + step[i][1]);
+            // need to update
+            if (mat[nextY][nextX] < 0 && mat[nextY][nextX] < -minDistance - 2)
+            {
+                mat[nextY][nextX] = -minDistance - 2;
+                updateDistance(mat, nextX, nextY);
+            }
         }
 
         mat[y][x] = -(minDistance + 1);
-
-        // printf("distance to [%i][%i] is %i\n", y, x, minDistance + 1);
         return minDistance + 1;
     }
     vector<vector<int>> updateMatrix(vector<vector<int>> &mat)
