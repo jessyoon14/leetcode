@@ -31,4 +31,5 @@ class Solution {
         return min;
     }
 };
+
 // @lc code=end
