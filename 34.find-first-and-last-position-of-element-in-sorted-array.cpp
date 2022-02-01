@@ -8,79 +8,70 @@
 class Solution {
    public:
     vector<int> searchRange(vector<int>& nums, int target) {
-        int left = 0;
-        int right = nums.size() - 1;
-        int mid = (left + right) / 2;
+        int size = nums.size();
+        vector<int> result(2, -1);
 
-        if (!nums.size()) {
-            vector<int> result{-1, -1};
+        // optimization, not necessary (in case list empty or not in range)
+        if (!size || nums[0] > target || nums[size - 1] < target)
             return result;
-        }
-
-        // printf("finding target\n");
-        // find target
-        while (left < right) {
-            // printf("mid: %i\n", mid);
-
-            if (nums[mid] > target)
-                right = mid - 1;
-            else if (nums[mid] < target)
-                left = mid + 1;
-            else
-                break;
-            mid = (left + right) / 2;
-        }
-
-        if (nums[mid] != target) {
-            vector<int> result{-1, -1};
-            return result;
-        }
 
         // find left boundary
-        // printf("finding left boundary\n");
-        int left1 = left;
-        int right1 = mid;
-        int mid1 = (left1 + right1) / 2;
-
-        while (left1 < right1) {
-            // printf("mid: %i\n", mid1);
-
-            if (nums[mid1] < target)
-                left1 = mid1 + 1;
-
-            else {
-                right1 = mid1;
-            }
-
-            mid1 = (left1 + right1) / 2;
+        int left = 0, right = size - 1;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target)
+                left = mid + 1;
+            else if (nums[mid] > target)
+                right = mid - 1;
+            else
+                right = mid;
         }
 
-        // now, left == right == left boundary
+        if (nums[left] != target)
+            return result;
+        result[0] = left;
 
         // find right boundary
-        int left2 = mid;
-        int right2 = right;
-        int mid2 = (left2 + right2) / 2;
-
-        // printf("finding right boundary\n");
-        // printf("before loop, left2: %i, right2: %i, mid: %i\n", left2, right2, mid2);
-
-        while (left2 < right2 - 1) {
-            // printf("left2: %i, right2: %i, mid: %i\n", left2, right2, mid2);
-
-            if (nums[mid2] == target)
-                left2 = mid2;
-
+        right = size - 1;
+        while (left < right) {
+            int mid = (left + right + 1) / 2;
+            if (nums[mid] == target)
+                left = mid;
             else
-                right2 = mid2 - 1;
-            mid2 = (left2 + right2) / 2;
+                right = mid - 1;
         }
 
-        if (nums[right2] == target)
-            left2 = right2;
-
-        vector<int> result{left1, left2};
+        result[1] = right;
         return result;
     }
 };
+
+// clean solution: https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/discuss/14717/C%2B%2B-binary-search-solution-(lower_bound-implementation).
+class Solution {
+   public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int left = search(nums, target);
+        int right = search(nums, target + 1) - 1;
+
+        if (left < nums.size() && nums[left] == target)
+            return {left, right};
+        else
+            return {-1, -1};
+    }
+
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+
+        while (left <= right) {
+            int mid = (right - left) / 2 + left;
+            if (nums[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+
+        return left;
+    }
+};
+
 // @lc code=end
