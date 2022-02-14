@@ -27,23 +27,23 @@ class Solution {
 };
 // @lc code=end
 
-// class Solution {
-//    public:
-//     int jump(vector<int>& nums) {
-//         int n = nums.size(), reach = 0;
-//         int jumps[n];
-//         memset(jumps, 0, sizeof(jumps));
+class Solution {
+   public:
+    int jump(vector<int>& nums) {
+        int n = nums.size(), reach = 0;
+        int jumps[n];
+        memset(jumps, 0, sizeof(jumps));
 
-//         for (int i = 0; i < n; i++) {
-//             int newReach = i + nums[i];
-//             if (newReach > reach) {
-//                 for (int j = reach + 1; j <= newReach && j < n; j++) {
-//                     jumps[j] = jumps[i] + 1;
-//                 }
-//                 reach = newReach;
-//             }
-//         }
+        for (int i = 0; i < n; i++) {
+            int newReach = i + nums[i];
+            if (newReach > reach) {
+                for (int j = reach + 1; j <= newReach && j < n; j++) {
+                    jumps[j] = jumps[i] + 1;
+                }
+                reach = newReach;
+            }
+        }
 
-//         return jumps[n - 1];
-//     }
-// };
+        return jumps[n - 1];
+    }
+};

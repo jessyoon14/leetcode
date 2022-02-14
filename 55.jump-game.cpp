@@ -19,17 +19,17 @@ class Solution {
 };
 // @lc code=end
 
-// class Solution {
-//    public:
-//     bool canJump(vector<int>& nums) {
-//         int len = nums.size();
-//         int maxPos = 0;
+class Solution {
+   public:
+    bool canJump(vector<int>& nums) {
+        int len = nums.size();
+        int maxPos = 0;
 
-//         for (int i = 0; i < len; i++) {
-//             if (maxPos < i) return false;
-//             if (maxPos >= len - 1) return true;
-//             maxPos = max(maxPos, i + nums[i]);
-//         }
-//         return false;
-//     }
-// };
+        for (int i = 0; i < len; i++) {
+            if (maxPos < i) return false;
+            if (maxPos >= len - 1) return true;
+            maxPos = max(maxPos, i + nums[i]);
+        }
+        return false;
+    }
+};
