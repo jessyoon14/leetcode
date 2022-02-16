@@ -6,8 +6,6 @@
 
 // @lc code=start
 class Solution {
-    // private:
-    // checkPalindromeAt(string s, int left, int right)
    public:
     string longestPalindrome(string s) {
         // find max odd-length palindrome
