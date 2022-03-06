@@ -14,7 +14,6 @@ class Solution {
 
     void check(int i) {
         int left = i, right = i;
-
         while (left > -1) {
             while (left > 0 && !isWords[left - 1])
                 left--;
@@ -34,24 +33,20 @@ class Solution {
         vector<bool> vec(s.size(), false);
         isWords = vec;
         maxWordLength = 0;
-
         for (string w : wordDict) {
             dict.insert(w);
             if (w.size() > maxWordLength)
                 maxWordLength = w.size();
         }
-
         str = s;
-
         for (int i = 0; i < s.size(); i++)
             check(i);
-
         return isWords[s.size() - 1];
     }
 };
 // @lc code=end
 
-/*
+
 class Solution {
    private:
     set<string> dict;
@@ -97,4 +92,3 @@ class Solution {
         return check(0);
     }
 };
-*/
