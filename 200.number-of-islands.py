@@ -11,11 +11,13 @@ class Solution:
 
     def markIsland(self, grid: List[List[str]], i: int, j: int):
         grid[i][j] = "0"
-        adjacent_land = [(i, j)]
+        # adjacent_land = [(i, j)]
+        adjacent_land = deque([(i, j)])
+
         # fill adjacent land
         # iterate through adjacent_land, mark "0" and fill adjacent_land
         while adjacent_land:
-            i, j = adjacent_land.pop(0)
+            i, j = adjacent_land.popleft()
             steps = [(-1, 0), (0, 1), (1, 0), (0, -1)]
             for di, dj in steps:
                 next_i = i + di
