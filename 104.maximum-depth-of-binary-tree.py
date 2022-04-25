@@ -19,19 +19,61 @@
 #         self.right = right
 class Solution:
     # iterative solution with stack
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
-        stack = []
-        if root is not None:
-            stack.append((1, root))
+    # def maxDepth(self, root: Optional[TreeNode]) -> int:
+    #     stack = []
+    #     if root is not None:
+    #         stack.append((1, root))
 
-        depth = 0
-        while stack != []:
-            current_depth, root = stack.pop()
-            if root is not None:
-                depth = max(depth, current_depth)
-                stack.append((current_depth + 1, root.left))
-                stack.append((current_depth + 1, root.right))
-        return depth
+    #     depth = 0
+    #     while stack != []:
+    #         current_depth, root = stack.pop()
+    #         if root is not None:
+    #             depth = max(depth, current_depth)
+    #             stack.append((current_depth + 1, root.left))
+    #             stack.append((current_depth + 1, root.right))
+    #     return depth
+
+    # BFS solution with queue
+    # def maxDepth(self, root: Optional[TreeNode]) -> int:
+    #     if root is None:
+    #         return 0
+    #     queue = deque([root])
+    #     level_count = 0
+    #     while queue:
+    #         level_count += 1
+    #         queue_count = len(queue)
+    #         for i in range(queue_count):
+    #             curr_node = queue.popleft()
+    #             if curr_node.left:
+    #                 queue.append(curr_node.left)
+    #             if curr_node.right:
+    #                 queue.append(curr_node.right)
+    #     return level_count
+
+    # recursive solution 2
+    #     def maxDepth(self, root: Optional[TreeNode]) -> int:
+    #         if root is None:
+    #             return 0
+    #         left_depth = self.maxDepth(root.left)
+    #         right_depth = self.maxDepth(root.right)
+
+    #         return max(left_depth, right_depth) + 1
+
+    # recursive(DFS) solution
+    #     def maxDepth(self, root: Optional[TreeNode]) -> int:
+    #         max_depth = 0
+
+    #         def rec(root, prev_depth):
+    #             if root is None:
+    #                 return
+    #             curr_depth = prev_depth + 1
+    #             nonlocal max_depth
+    #             max_depth = max(max_depth, curr_depth)
+    #             rec(root.left, curr_depth)
+    #             rec(root.right, curr_depth)
+
+    #         rec(root, 0)
+    #         return max_depth
 
     # # tail recursion (still uses O(n) memory, due to next_level. Could use dequeue outside of rec, which still requires N/2 memory)
     # def maxDepth(self, root: Optional[TreeNode]) -> int:
@@ -51,4 +93,4 @@ class Solution:
     #     if root is None:
     #         return 0
     #     return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
-# @lc code=end
+    # @lc code=end
