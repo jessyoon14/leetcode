@@ -1,5 +1,12 @@
 """
 Reference: https://github.com/careercup/CtCI-6th-Edition-Python/blob/master/chapter_03/p02_stack_min.py
+
+Point:
+- Have separate minstack
+
+Optimization
+1. Space optimize: Only store minimum values on minstack when new val <= min instead of min values for all items
+2. Future space optimize: Only store min values when min val is updated. Minstack stores tuples of (minval, index of minval)
 """
 
 
