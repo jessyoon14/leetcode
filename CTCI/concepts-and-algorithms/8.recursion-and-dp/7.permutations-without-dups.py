@@ -30,7 +30,7 @@ fix prefix and compute permutation for the tail (can return list or do tail recu
    0        1          2       3         4
 0 1 2 3   0 1 2 3   0 1 2 3  0 1 2 3   0 1 2 3
 
--> function gets called n! times (total of n! nodes in recursion tree)
+-> function gets called n! times (total of n! leaves in recursion tree)
 -> each function call needs most n to run,  for str copy (ignore n recursive calls, since it's included in the # nodes calculation)
 -> n * n!
 """
