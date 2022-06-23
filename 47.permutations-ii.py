@@ -22,7 +22,7 @@ class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         if len(nums) == 0:
             return []
-        nums.sort()v
+        nums.sort()
         results = []
         curr_perm = []
         self.permute(nums, curr_perm, results)
